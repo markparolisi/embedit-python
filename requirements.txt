@@ -1,0 +1,4 @@
+flask==0.12.2
+configparser==3.5.0
+imgurpython==1.1.7
+giphypop==0.3

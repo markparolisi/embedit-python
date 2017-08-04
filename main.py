@@ -28,9 +28,15 @@ def media():
         }
         return jsonify(error), 400
 
-    imgurMedia = ImgurService.getMedia(query)
+    servicesList = services.split(",")
 
-    media = [m.properties for m in imgurMedia]
+    media = []
+
+    if "imgur" in servicesList:
+        imgurMedia = ImgurService.getMedia(query)
+        media = media + imgurMedia
+
+    media = [m.properties for m in media]
 
     return jsonify(media)
 

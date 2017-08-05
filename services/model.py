@@ -1,8 +1,9 @@
 class MediaModel:
     def __init__(self, attributes):
         """
+        Define a common struct and allow services to override property values
 
-        :param attributes:
+        :param attributes: Dictionary of overridden values
         """
         default_properties = {
             "name": "",

@@ -1,18 +1,24 @@
 import giphypop
-from datetime import datetime
 from .model import MediaModel
+import json_config
 
 
 class GiphyService:
-    def getMedia(searchQuery):
-        mediaModels = []
+    @staticmethod
+    def getMedia(search_query):
+        """
 
-        client = giphypop.Giphy()
-        items = client.search(searchQuery)
+        :param search_query: String to search service for
+        :return:
+        """
+        media_models = []
+        cfg = json_config.connect("credentials.json")
+        giphy_api_key = cfg["giphy"]["apiKey"]
+        client = giphypop.Giphy(api_key=giphy_api_key)
+        items = client.search(search_query)
 
         for item in items:
-
-            #created = datetime.fromtimestamp(item.import_datetime).isoformat()
+            # created = datetime.fromtimestamp(item.import_datetime).isoformat()
             created = ""
 
             attrs = {
@@ -27,6 +33,6 @@ class GiphyService:
             }
 
             media = MediaModel(attrs)
-            mediaModels.append(media)
+            media_models.append(media)
 
-        return mediaModels
+        return media_models

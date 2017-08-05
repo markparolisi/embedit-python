@@ -7,14 +7,20 @@ from .model import MediaModel
 
 
 class ImgurService:
-    def getMedia(searchQuery):
-        mediaModels = []
+    @staticmethod
+    def getMedia(search_query):
+        """
+
+        :param search_query: String to search service for
+        :return:
+        """
+        media_models = []
 
         cfg = json_config.connect("credentials.json")
-        imgurClientID = cfg["imgur"]["clientID"]
-        imgurClientSecret = cfg["imgur"]["clientSecret"]
-        client = ImgurClient(imgurClientID, imgurClientSecret)
-        items = client.gallery_search(searchQuery, sort="viral")
+        client_id = cfg["imgur"]["clientID"]
+        client_secret = cfg["imgur"]["clientSecret"]
+        client = ImgurClient(client_id, client_secret)
+        items = client.gallery_search(search_query, sort="viral")
 
         for item in items:
 
@@ -22,7 +28,7 @@ class ImgurService:
                 continue
 
             created = datetime.fromtimestamp(item.datetime).isoformat()
-            thumbnailURL = re.sub(r"(\.[a-z]{3,4})$", "m\\1", item.link)
+            thumbnail_url = re.sub(r"(\.[a-z]{3,4})$", "m\\1", item.link)
 
             attrs = {
                 "name": item.title,
@@ -31,11 +37,11 @@ class ImgurService:
                 "source": item.link,
                 "type": 'image',
                 "created": created,
-                "thumbnailURL": thumbnailURL,
+                "thumbnailURL": thumbnail_url,
                 "credit": 'http://imgur.com/user/' + item.account_url,
             }
 
             media = MediaModel(attrs)
-            mediaModels.append(media)
+            media_models.append(media)
 
-        return mediaModels
+        return media_models

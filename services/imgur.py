@@ -17,7 +17,6 @@ class ImgurService:
         items = client.gallery_search(searchQuery, sort="viral")
 
         for item in items:
-            print(item)
 
             if item.is_album is True:
                 continue
